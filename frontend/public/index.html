@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#14b8a6" />
+    <meta
+      name="description"
+      content="HerbTrace - Blockchain-powered traceability for medicinal herbs. Ensuring authenticity and quality from farm to pharmacy."
+    />
+    <meta
+      name="keywords"
+      content="herbal medicine, blockchain, traceability, quality assurance, medicinal herbs, supply chain"
+    />
+    <meta name="author" content="HerbTrace" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://herbtrace.com/" />
+    <meta
+      property="og:title"
+      content="HerbTrace - Blockchain Herb Traceability"
+    />
+    <meta
+      property="og:description"
+      content="Ensuring the authenticity and quality of medicinal herbs through blockchain-powered traceability."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://herbtrace.com/" />
+    <meta
+      property="twitter:title"
+      content="HerbTrace - Blockchain Herb Traceability"
+    />
+    <meta
+      property="twitter:description"
+      content="Ensuring the authenticity and quality of medicinal herbs through blockchain-powered traceability."
+    />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>HerbTrace - Blockchain Herb Traceability</title>
+  </head>
+  <body>
+    <noscript>
+      <div
+        style="
+          text-align: center;
+          padding: 50px;
+          font-family: Arial, sans-serif;
+        "
+      >
+        <h2>JavaScript Required</h2>
+        <p>You need to enable JavaScript to run this application.</p>
+        <p>
+          HerbTrace requires JavaScript to provide the best user experience.
+        </p>
+      </div>
+    </noscript>
+
+    <div id="root"></div>
+
+    <!-- Loading indicator for slow connections -->
+    <script>
+      // Simple loading indicator
+      if (document.getElementById("root").children.length === 0) {
+        setTimeout(() => {
+          if (document.getElementById("root").children.length === 0) {
+            document.getElementById("root").innerHTML = `
+              <div style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                font-family: Arial, sans-serif;
+              ">
+                <div style="
+                  border: 3px solid #e3ebe3;
+                  border-top: 3px solid #14b8a6;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  animation: spin 1s linear infinite;
+                  margin: 0 auto 20px;
+                "></div>
+                <p>Loading HerbTrace...</p>
+                <style>
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                </style>
+              </div>
+            `;
+          }
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
