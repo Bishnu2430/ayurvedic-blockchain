@@ -247,29 +247,30 @@ const TraceHerb = () => {
         {herbData && herbData.herbBatch && (
           <div className="space-y-8">
             {/* Verification Status */}
-            {verificationStatus && (
-              <div
-                className={`rounded-lg border p-6 ${verificationStatus.bgColor} ${verificationStatus.borderColor}`}
-              >
-                <div className="flex items-center space-x-3">
-                  <verificationStatus.icon
-                    className={`w-8 h-8 ${verificationStatus.color}`}
-                  />
-                  <div>
-                    <h3
-                      className={`text-lg font-semibold ${verificationStatus.color}`}
-                    >
-                      {verificationStatus.title}
-                    </h3>
-                    <p
-                      className={`text-sm ${verificationStatus.color} opacity-80`}
-                    >
-                      {verificationStatus.description}
-                    </p>
+            {verificationStatus &&
+              verificationStatus.status !== "unverified" && (
+                <div
+                  className={`rounded-lg border p-6 ${verificationStatus.bgColor} ${verificationStatus.borderColor}`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <verificationStatus.icon
+                      className={`w-8 h-8 ${verificationStatus.color}`}
+                    />
+                    <div>
+                      <h3
+                        className={`text-lg font-semibold ${verificationStatus.color}`}
+                      >
+                        {verificationStatus.title}
+                      </h3>
+                      <p
+                        className={`text-sm ${verificationStatus.color} opacity-80`}
+                      >
+                        {verificationStatus.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Herb Details */}
             <div className="bg-white rounded-lg shadow-soft border border-sage-100">
