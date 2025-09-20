@@ -6,7 +6,7 @@ import {
   Plus,
   Leaf,
   TestTube,
-  Cog,
+  Settings,
   BarChart3,
   TrendingUp,
   Package,
@@ -103,7 +103,7 @@ const Dashboard = () => {
         {
           title: "Process Herbs",
           description: "Add processing steps",
-          icon: Cog,
+          icon: Settings,
           path: "/process",
           color: "bg-purple-500 hover:bg-purple-600",
         },
@@ -158,7 +158,7 @@ const Dashboard = () => {
         {
           title: "Processing Steps",
           value: stats.statusBreakdown?.processed || 0,
-          icon: Cog,
+          icon: Settings,
           color: "text-orange-600",
           bgColor: "bg-orange-50",
         },
@@ -292,7 +292,7 @@ const Dashboard = () => {
             return (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-soft border border-sage-100"
+                className="bg-white p-6 rounded-lg shadow-soft border border-sage-100 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -321,7 +321,7 @@ const Dashboard = () => {
                   </h2>
                   <Link
                     to="/herbs"
-                    className="flex items-center space-x-1 text-mint-600 hover:text-mint-700 text-sm font-medium"
+                    className="flex items-center space-x-1 text-mint-600 hover:text-mint-700 text-sm font-medium transition-colors"
                   >
                     <span>View all</span>
                     <Eye className="w-4 h-4" />
@@ -421,21 +421,36 @@ const Dashboard = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sage-600">Blockchain Network</span>
-                  <StatusBadge status="SUCCESS" size="sm" showIcon={false} />
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-green-600 font-medium">
+                      Online
+                    </span>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sage-600">Database</span>
-                  <StatusBadge status="SUCCESS" size="sm" showIcon={false} />
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-green-600 font-medium">
+                      Online
+                    </span>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sage-600">API Services</span>
-                  <StatusBadge status="SUCCESS" size="sm" showIcon={false} />
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-green-600 font-medium">
+                      Online
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 p-3 bg-green-50 rounded-lg">
-                <p className="text-sm text-green-800">
-                  <CheckCircle className="w-4 h-4 inline mr-1" />
+              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-green-800 flex items-center">
+                  <CheckCircle className="w-4 h-4 mr-2" />
                   All systems operational
                 </p>
               </div>

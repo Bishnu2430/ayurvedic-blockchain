@@ -9,7 +9,7 @@ import {
   Calendar,
   User,
   TestTube,
-  Cog,
+  Settings,
   CheckCircle,
   AlertCircle,
   ExternalLink,
@@ -489,7 +489,7 @@ const TraceHerb = () => {
                       <span>Laboratory tested for quality</span>
                     </li>
                     <li className="flex items-start space-x-2">
-                      <Cog className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                      <Settings className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
                       <span>Processed under controlled conditions</span>
                     </li>
                     <li className="flex items-start space-x-2">

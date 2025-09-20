@@ -1,9 +1,6 @@
-// Home.js
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { motion } from "framer-motion";
 import {
   Shield,
   Search,
@@ -11,10 +8,62 @@ import {
   Users,
   ChevronRight,
   CheckCircle,
+  TrendingUp,
+  Globe,
+  Award,
+  Zap,
+  Package,
+  Activity,
 } from "lucide-react";
 
 const Home = () => {
   const { user } = useAuth();
+  const [stats, setStats] = useState({
+    dailyVisits: 0,
+    totalUsers: 0,
+    herbsProcessed: 0,
+    activeRegions: 0,
+  });
+
+  // Simulate real-time stats
+  useEffect(() => {
+    const animateStats = () => {
+      const targetStats = {
+        dailyVisits: 2847,
+        totalUsers: 15623,
+        herbsProcessed: 45782,
+        activeRegions: 28,
+      };
+
+      const duration = 2000; // 2 seconds
+      const steps = 60; // 60 fps
+      const increment = duration / steps;
+
+      let currentStep = 0;
+      const timer = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+
+        setStats({
+          dailyVisits: Math.floor(targetStats.dailyVisits * easeOutQuart),
+          totalUsers: Math.floor(targetStats.totalUsers * easeOutQuart),
+          herbsProcessed: Math.floor(targetStats.herbsProcessed * easeOutQuart),
+          activeRegions: Math.floor(targetStats.activeRegions * easeOutQuart),
+        });
+
+        if (currentStep >= steps) {
+          clearInterval(timer);
+          setStats(targetStats);
+        }
+      }, increment);
+
+      return () => clearInterval(timer);
+    };
+
+    const timeout = setTimeout(animateStats, 500);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const features = [
     {
@@ -22,24 +71,28 @@ const Home = () => {
       title: "Blockchain Security",
       description:
         "Immutable records powered by Hyperledger Fabric ensure data integrity and prevent tampering.",
+      color: "from-green-500 to-emerald-600",
     },
     {
       icon: Search,
       title: "Complete Traceability",
       description:
         "Track every step from herb collection to final product with QR code scanning.",
+      color: "from-blue-500 to-cyan-600",
     },
     {
       icon: TestTube,
       title: "Quality Assurance",
       description:
         "Laboratory testing and certification processes ensure herb authenticity and quality.",
+      color: "from-purple-500 to-violet-600",
     },
     {
       icon: Users,
       title: "Multi-Stakeholder",
       description:
         "Connect farmers, labs, processors, and consumers in a transparent network.",
+      color: "from-orange-500 to-red-600",
     },
   ];
 
@@ -52,80 +105,146 @@ const Home = () => {
     "Enable rapid recall when needed",
   ];
 
+  const testimonials = [
+    {
+      name: "Dr. Priya Sharma",
+      role: "Ayurvedic Practitioner",
+      content:
+        "HerbTrace has revolutionized how I verify the authenticity of medicinal herbs for my patients.",
+      rating: 5,
+    },
+    {
+      name: "Rajesh Kumar",
+      role: "Herb Farmer",
+      content:
+        "The platform helps me showcase the quality of my herbs and build trust with buyers.",
+      rating: 5,
+    },
+    {
+      name: "Mumbai Herbs Lab",
+      role: "Quality Testing Lab",
+      content:
+        "Integration with HerbTrace streamlined our testing workflow and certification process.",
+      rating: 5,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section
-        className="relative bg-cover bg-center py-20 lg:py-28"
-        style={{ backgroundImage: "url('/herbs-bg.svg')" }}
-      >
-        <div className="absolute inset-0 bg-sage-900/70"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl lg:text-6xl font-bold text-white mb-6"
-          >
-            Trust Every Herb with
-            <span className="block text-mint-400">Blockchain Traceability</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl text-sage-100 mb-8 max-w-3xl mx-auto"
-          >
-            Ensuring the authenticity and quality of medicinal herbs through
-            transparent, immutable records. From farm to pharmacy, track every
-            step of the journey.
-          </motion.p>
+      <section className="relative bg-gradient-to-br from-sage-900 via-sage-800 to-mint-900 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-sage-900/80 to-transparent"></div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {user ? (
-              <Link
-                to="/dashboard"
-                className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
-              >
-                Go to Dashboard
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </Link>
-            ) : (
-              <>
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-1/2 -right-1/2 w-96 h-96 bg-mint-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-1/2 -left-1/2 w-96 h-96 bg-sage-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              Trust Every Herb with
+              <span className="block text-transparent bg-gradient-to-r from-mint-400 to-green-400 bg-clip-text">
+                Blockchain Traceability
+              </span>
+            </h1>
+            <p className="text-xl lg:text-2xl text-sage-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Ensuring the authenticity and quality of medicinal herbs through
+              transparent, immutable records. From farm to pharmacy, track every
+              step of the journey.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              {user ? (
                 <Link
-                  to="/register"
-                  className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
+                  to="/dashboard"
+                  className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-mint-500 to-mint-600 text-white font-semibold rounded-xl hover:from-mint-600 hover:to-mint-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg"
                 >
-                  Join the Network
-                  <ChevronRight className="ml-2 w-5 h-5" />
+                  Go to Dashboard
+                  <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link
-                  to="/trace"
-                  className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-sage-700 transition-colors"
-                >
-                  Trace a Herb
-                  <Search className="ml-2 w-5 h-5" />
-                </Link>
-              </>
-            )}
+              ) : (
+                <>
+                  <Link
+                    to="/register"
+                    className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-mint-500 to-mint-600 text-white font-semibold rounded-xl hover:from-mint-600 hover:to-mint-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-lg"
+                  >
+                    Join the Network
+                    <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/trace"
+                    className="group inline-flex items-center px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
+                  >
+                    Trace a Herb
+                    <Search className="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </Link>
+                </>
+              )}
+            </div>
+
+            {/* Real-time Stats */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <div className="flex items-center justify-center mb-2">
+                  <Activity className="w-6 h-6 text-mint-400" />
+                </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+                  {stats.dailyVisits.toLocaleString()}
+                </div>
+                <div className="text-sage-200 text-sm">Daily Visits</div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <div className="flex items-center justify-center mb-2">
+                  <Users className="w-6 h-6 text-mint-400" />
+                </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+                  {stats.totalUsers.toLocaleString()}
+                </div>
+                <div className="text-sage-200 text-sm">Total Users</div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <div className="flex items-center justify-center mb-2">
+                  <Package className="w-6 h-6 text-mint-400" />
+                </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+                  {stats.herbsProcessed.toLocaleString()}
+                </div>
+                <div className="text-sage-200 text-sm">Herbs Processed</div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <div className="flex items-center justify-center mb-2">
+                  <Globe className="w-6 h-6 text-mint-400" />
+                </div>
+                <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+                  {stats.activeRegions}
+                </div>
+                <div className="text-sage-200 text-sm">Active Regions</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section
-        className="py-20 bg-white relative"
-        style={{ backgroundImage: "url('/herbal-pattern.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 to-white/95"></div>
+      <section className="py-20 bg-gradient-to-b from-white to-sage-50 relative overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-sage-800 mb-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-mint-100 text-mint-700 rounded-full text-sm font-medium mb-4">
+              <Zap className="w-4 h-4 mr-2" />
               Why Choose HerbTrace?
+            </div>
+            <h2 className="text-3xl lg:text-5xl font-bold text-sage-800 mb-6">
+              Revolutionary Blockchain Technology
             </h2>
-            <p className="text-lg text-sage-600 max-w-2xl mx-auto">
-              Our blockchain-powered platform ensures transparency, security,
-              and trust in the medicinal herb supply chain.
+            <p className="text-xl text-sage-600 max-w-3xl mx-auto">
+              Our cutting-edge platform ensures transparency, security, and
+              trust in the medicinal herb supply chain through advanced
+              blockchain technology.
             </p>
           </div>
 
@@ -133,22 +252,25 @@ const Home = () => {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                  className="group relative p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-sage-100"
                 >
-                  <div className="w-12 h-12 bg-mint-100 rounded-lg flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-mint-600" />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300`}
+                  ></div>
+                  <div
+                    className={`w-16 h-16 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-sage-800 mb-3">
+                  <h3 className="text-xl font-bold text-sage-800 mb-4 group-hover:text-mint-600 transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-sage-600">{feature.description}</p>
-                </motion.div>
+                  <p className="text-sage-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
               );
             })}
           </div>
@@ -156,104 +278,179 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-sage-50">
+      <section className="py-20 bg-gradient-to-r from-sage-50 to-mint-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-sage-800 mb-6">
+              <div className="inline-flex items-center px-4 py-2 bg-sage-100 text-sage-700 rounded-full text-sm font-medium mb-4">
+                <Award className="w-4 h-4 mr-2" />
+                Industry Impact
+              </div>
+              <h2 className="text-3xl lg:text-5xl font-bold text-sage-800 mb-8 leading-tight">
                 Transforming the Herbal Medicine Industry
               </h2>
-              <p className="text-lg text-sage-600 mb-8">
+              <p className="text-xl text-sage-600 mb-10 leading-relaxed">
                 HerbTrace addresses critical challenges in the medicinal herb
-                supply chain, providing unprecedented transparency and trust.
+                supply chain, providing unprecedented transparency and trust for
+                all stakeholders.
               </p>
-              <ul className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-mint-500 flex-shrink-0" />
-                    <span className="text-sage-700">{benefit}</span>
-                  </li>
+                  <div
+                    key={index}
+                    className="flex items-start space-x-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <CheckCircle className="w-6 h-6 text-mint-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-sage-700 font-medium">{benefit}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-mint-100 to-sage-100 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="text-center">
-                <div className="text-4xl font-bold text-mint-600 mb-2">
-                  10,000+
-                </div>
-                <div className="text-sage-700 mb-6">
-                  Herbs Traced Successfully
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-semibold text-sage-800">
-                      500+
-                    </div>
-                    <div className="text-sm text-sage-600">Active Farmers</div>
+
+            <div className="relative">
+              <div className="bg-gradient-to-br from-mint-100 via-white to-sage-100 p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-mint-200/30 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-sage-200/30 rounded-full blur-xl"></div>
+
+                <div className="relative text-center">
+                  <div className="text-5xl font-bold text-transparent bg-gradient-to-r from-mint-600 to-sage-600 bg-clip-text mb-4">
+                    {stats.herbsProcessed.toLocaleString()}+
                   </div>
-                  <div>
-                    <div className="text-2xl font-semibold text-sage-800">
-                      50+
-                    </div>
-                    <div className="text-sm text-sage-600">Certified Labs</div>
+                  <div className="text-sage-700 text-lg font-semibold mb-8">
+                    Herbs Traced Successfully
                   </div>
-                  <div>
-                    <div className="text-2xl font-semibold text-sage-800">
-                      25+
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                      <div className="text-2xl font-bold text-mint-600 mb-1">
+                        500+
+                      </div>
+                      <div className="text-sm text-sage-600">
+                        Active Farmers
+                      </div>
                     </div>
-                    <div className="text-sm text-sage-600">
-                      Processing Units
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                      <div className="text-2xl font-bold text-mint-600 mb-1">
+                        50+
+                      </div>
+                      <div className="text-sm text-sage-600">
+                        Certified Labs
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-semibold text-sage-800">
-                      99.9%
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                      <div className="text-2xl font-bold text-mint-600 mb-1">
+                        25+
+                      </div>
+                      <div className="text-sm text-sage-600">
+                        Processing Units
+                      </div>
                     </div>
-                    <div className="text-sm text-sage-600">Uptime</div>
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                      <div className="text-2xl font-bold text-mint-600 mb-1">
+                        99.9%
+                      </div>
+                      <div className="text-sm text-sage-600">Uptime</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-mint-100 text-mint-700 rounded-full text-sm font-medium mb-4">
+              <Users className="w-4 h-4 mr-2" />
+              What Our Users Say
+            </div>
+            <h2 className="text-3xl lg:text-5xl font-bold text-sage-800 mb-6">
+              Trusted by Industry Leaders
+            </h2>
+            <p className="text-xl text-sage-600 max-w-2xl mx-auto">
+              See how HerbTrace is making a difference across the medicinal herb
+              supply chain
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-sage-50 to-mint-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <div key={i} className="w-5 h-5 text-yellow-400">
+                      ⭐
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sage-700 mb-6 italic leading-relaxed">
+                  "{testimonial.content}"
+                </p>
+                <div className="border-t border-sage-200 pt-4">
+                  <div className="font-semibold text-sage-800">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-sm text-sage-600">
+                    {testimonial.role}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-sage-800">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+      <section className="py-20 bg-gradient-to-r from-sage-800 via-sage-900 to-mint-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-sage-900/90 to-transparent"></div>
+
+        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-mint-400 rounded-full text-sm font-medium mb-6">
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Join the Revolution
+          </div>
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
             Ready to Join the Future of Herbal Medicine?
           </h2>
-          <p className="text-xl text-sage-200 mb-8">
+          <p className="text-xl lg:text-2xl text-sage-200 mb-10 leading-relaxed">
             Start building trust in your herbal products today with
-            blockchain-powered traceability.
+            blockchain-powered traceability and transparency.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {!user && (
-              <>
-                <Link
-                  to="/register"
-                  className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-colors"
-                >
-                  Get Started Free
-                  <ChevronRight className="ml-2 w-5 h-5" />
-                </Link>
-                <Link
-                  to="/trace"
-                  className="inline-flex items-center px-8 py-4 border-2 border-sage-300 text-sage-200 font-semibold rounded-lg hover:bg-sage-700 transition-colors"
-                >
-                  Try Demo
-                  <Search className="ml-2 w-5 h-5" />
-                </Link>
-              </>
-            )}
-          </div>
+
+          {!user && (
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link
+                to="/register"
+                className="group inline-flex items-center px-10 py-4 bg-gradient-to-r from-mint-500 to-mint-600 text-white font-bold rounded-xl hover:from-mint-600 hover:to-mint-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl shadow-xl text-lg"
+              >
+                Get Started Free
+                <ChevronRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                to="/trace"
+                className="group inline-flex items-center px-10 py-4 border-2 border-sage-300/50 text-sage-200 font-bold rounded-xl hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all duration-300 text-lg"
+              >
+                Try Demo
+                <Search className="ml-3 w-6 h-6 group-hover:scale-110 transition-transform" />
+              </Link>
+            </div>
+          )}
+
+          {user && (
+            <Link
+              to="/dashboard"
+              className="group inline-flex items-center px-10 py-4 bg-gradient-to-r from-mint-500 to-mint-600 text-white font-bold rounded-xl hover:from-mint-600 hover:to-mint-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl shadow-xl text-lg"
+            >
+              Go to Dashboard
+              <ChevronRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          )}
         </div>
       </section>
     </div>
