@@ -1,16 +1,16 @@
+// Home.js
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { motion } from "framer-motion";
 import {
   Shield,
   Search,
-  Users,
-  Leaf,
   TestTube,
-  Settings,
+  Users,
   ChevronRight,
   CheckCircle,
-  ArrowRight,
 } from "lucide-react";
 
 const Home = () => {
@@ -43,41 +43,6 @@ const Home = () => {
     },
   ];
 
-  const stakeholders = [
-    {
-      icon: Leaf,
-      title: "Farmers",
-      description: "Record herb collection with location and quality data",
-      action: "Start Collecting",
-      color: "text-green-600",
-      bg: "bg-green-50",
-    },
-    {
-      icon: TestTube,
-      title: "Laboratories",
-      description: "Add quality test results and certifications",
-      action: "Begin Testing",
-      color: "text-blue-600",
-      bg: "bg-blue-50",
-    },
-    {
-      icon: Settings,
-      title: "Processors",
-      description: "Document processing steps and conditions",
-      action: "Process Herbs",
-      color: "text-purple-600",
-      bg: "bg-purple-50",
-    },
-    {
-      icon: Users,
-      title: "Consumers",
-      description: "Verify authenticity and trace herb journey",
-      action: "Trace Products",
-      color: "text-mint-600",
-      bg: "bg-mint-50",
-    },
-  ];
-
   const benefits = [
     "Eliminate counterfeit medicinal herbs",
     "Ensure quality and safety standards",
@@ -90,55 +55,70 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-mint-50 via-cream-50 to-sage-50 py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl lg:text-6xl font-bold text-sage-800 mb-6">
-              Trust Every Herb with
-              <span className="text-mint-600 block">
-                Blockchain Traceability
-              </span>
-            </h1>
-            <p className="text-xl text-sage-600 mb-8 max-w-3xl mx-auto">
-              Ensuring the authenticity and quality of medicinal herbs through
-              transparent, immutable records. From farm to pharmacy, track every
-              step of the journey.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {user ? (
+      <section
+        className="relative bg-cover bg-center py-20 lg:py-28"
+        style={{ backgroundImage: "url('/herbs-bg.svg')" }}
+      >
+        <div className="absolute inset-0 bg-sage-900/70"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl lg:text-6xl font-bold text-white mb-6"
+          >
+            Trust Every Herb with
+            <span className="block text-mint-400">Blockchain Traceability</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-xl text-sage-100 mb-8 max-w-3xl mx-auto"
+          >
+            Ensuring the authenticity and quality of medicinal herbs through
+            transparent, immutable records. From farm to pharmacy, track every
+            step of the journey.
+          </motion.p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {user ? (
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
+              >
+                Go to Dashboard
+                <ChevronRight className="ml-2 w-5 h-5" />
+              </Link>
+            ) : (
+              <>
                 <Link
-                  to="/dashboard"
-                  className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-mint"
+                  to="/register"
+                  className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg"
                 >
-                  Go to Dashboard
+                  Join the Network
                   <ChevronRight className="ml-2 w-5 h-5" />
                 </Link>
-              ) : (
-                <>
-                  <Link
-                    to="/register"
-                    className="inline-flex items-center px-8 py-4 bg-mint-500 text-white font-semibold rounded-lg hover:bg-mint-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-mint"
-                  >
-                    Join the Network
-                    <ChevronRight className="ml-2 w-5 h-5" />
-                  </Link>
-                  <Link
-                    to="/trace"
-                    className="inline-flex items-center px-8 py-4 border-2 border-sage-300 text-sage-700 font-semibold rounded-lg hover:bg-sage-50 transition-colors"
-                  >
-                    Trace a Herb
-                    <Search className="ml-2 w-5 h-5" />
-                  </Link>
-                </>
-              )}
-            </div>
+                <Link
+                  to="/trace"
+                  className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-sage-700 transition-colors"
+                >
+                  Trace a Herb
+                  <Search className="ml-2 w-5 h-5" />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section
+        className="py-20 bg-white relative"
+        style={{ backgroundImage: "url('/herbal-pattern.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 to-white/95"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-sage-800 mb-4">
               Why Choose HerbTrace?
@@ -153,9 +133,13 @@ const Home = () => {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div
+                <motion.div
                   key={index}
-                  className="p-6 bg-cream-50 rounded-xl hover:shadow-soft transition-shadow card-hover"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 }}
+                  className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
                 >
                   <div className="w-12 h-12 bg-mint-100 rounded-lg flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6 text-mint-600" />
@@ -164,53 +148,7 @@ const Home = () => {
                     {feature.title}
                   </h3>
                   <p className="text-sage-600">{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Stakeholders Section */}
-      <section className="py-16 bg-sage-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-sage-800 mb-4">
-              For Every Stakeholder
-            </h2>
-            <p className="text-lg text-sage-600 max-w-2xl mx-auto">
-              Whether you're a farmer, lab technician, processor, or consumer,
-              HerbTrace has tools designed for your role.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stakeholders.map((stakeholder, index) => {
-              const Icon = stakeholder.icon;
-              return (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-xl shadow-soft hover:shadow-lg transition-all card-hover"
-                >
-                  <div
-                    className={`w-12 h-12 ${stakeholder.bg} rounded-lg flex items-center justify-center mb-4`}
-                  >
-                    <Icon className={`w-6 h-6 ${stakeholder.color}`} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-sage-800 mb-3">
-                    {stakeholder.title}
-                  </h3>
-                  <p className="text-sage-600 mb-4">
-                    {stakeholder.description}
-                  </p>
-                  <Link
-                    to={user ? "/dashboard" : "/register"}
-                    className={`inline-flex items-center font-semibold ${stakeholder.color} hover:underline`}
-                  >
-                    {stakeholder.action}
-                    <ArrowRight className="ml-1 w-4 h-4" />
-                  </Link>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -218,7 +156,7 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-sage-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -238,7 +176,13 @@ const Home = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-gradient-to-br from-mint-100 to-sage-100 p-8 rounded-2xl">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-gradient-to-br from-mint-100 to-sage-100 p-8 rounded-2xl shadow-lg"
+            >
               <div className="text-center">
                 <div className="text-4xl font-bold text-mint-600 mb-2">
                   10,000+
@@ -275,13 +219,13 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-sage-800">
+      <section className="py-20 bg-sage-800">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
             Ready to Join the Future of Herbal Medicine?
