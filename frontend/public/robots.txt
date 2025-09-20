@@ -1,0 +1,20 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Allow: /trace*
+
+# Block admin and private routes
+Disallow: /admin*
+Disallow: /dashboard*
+Disallow: /profile*
+Disallow: /collect*
+Disallow: /quality-test*
+Disallow: /process*
+
+# Allow search engines to access public tracing functionality
+Allow: /trace
+Allow: /login
+Allow: /register
+
+# Sitemap location (optional - add when you have one)
+# Sitemap: https://herbtrace.com/sitemap.xml

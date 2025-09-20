@@ -9,37 +9,39 @@ import {
 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 
+// === Helper functions shared by both components ===
+const getEventIcon = (eventType) => {
+  const icons = {
+    COLLECTION: { icon: CheckCircle, color: "text-green-600" },
+    QUALITY_TEST: { icon: TestTube, color: "text-blue-600" },
+    PROCESSING: { icon: Cog, color: "text-purple-600" },
+    DISTRIBUTION: { icon: CheckCircle, color: "text-mint-600" },
+  };
+  return icons[eventType] || { icon: CheckCircle, color: "text-gray-600" };
+};
+
+const getEventTitle = (event) => {
+  const titles = {
+    COLLECTION: "Herb Collection",
+    QUALITY_TEST: "Quality Testing",
+    PROCESSING: "Processing Step",
+    DISTRIBUTION: "Distribution",
+  };
+  return titles[event.eventType] || event.eventType;
+};
+
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+// === Main Timeline ===
 const Timeline = ({ events = [], title = "Herb Journey" }) => {
-  const getEventIcon = (eventType) => {
-    const icons = {
-      COLLECTION: { icon: CheckCircle, color: "text-green-600" },
-      QUALITY_TEST: { icon: TestTube, color: "text-blue-600" },
-      PROCESSING: { icon: Cog, color: "text-purple-600" },
-      DISTRIBUTION: { icon: CheckCircle, color: "text-mint-600" },
-    };
-    return icons[eventType] || { icon: CheckCircle, color: "text-gray-600" };
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const getEventTitle = (event) => {
-    const titles = {
-      COLLECTION: "Herb Collection",
-      QUALITY_TEST: "Quality Testing",
-      PROCESSING: "Processing Step",
-      DISTRIBUTION: "Distribution",
-    };
-    return titles[event.eventType] || event.eventType;
-  };
-
   const getEventDescription = (event) => {
     const { data = {} } = event;
 
@@ -251,7 +253,7 @@ const Timeline = ({ events = [], title = "Herb Journey" }) => {
   );
 };
 
-// Compact timeline for smaller spaces
+// === Compact Timeline ===
 export const TimelineCompact = ({ events = [] }) => {
   if (!events.length) {
     return (
