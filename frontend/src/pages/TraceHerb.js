@@ -279,15 +279,6 @@ const TraceHerb = () => {
                   <h2 className="text-xl font-semibold text-sage-800">
                     Herb Information
                   </h2>
-                  <button
-                    onClick={() =>
-                      navigate(`/herbs/${herbData.herbBatch.herbId}`)
-                    }
-                    className="flex items-center space-x-1 text-mint-600 hover:text-mint-700 text-sm font-medium"
-                  >
-                    <Eye className="w-4 h-4" />
-                    <span>View Full Details</span>
-                  </button>
                 </div>
               </div>
 
