@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import ChatBot from "../components/ChatBot";
 import {
   Shield,
   Search,
@@ -471,6 +472,7 @@ const Home = () => {
           )}
         </div>
       </section>
+      <ChatBot />
     </div>
   );
 };

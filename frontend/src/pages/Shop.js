@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ShoppingCart, X, ChevronDown } from "lucide-react";
+import ChatBot from "../components/ChatBot";
 
 // Detailed product data
 const products = [
@@ -297,6 +298,7 @@ const Shop = () => {
   const [expandedProduct, setExpandedProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const filteredProducts = products
     .filter((p) =>
@@ -322,6 +324,7 @@ const Shop = () => {
     } else {
       setCart([...cart, { ...product, quantity: qty }]);
     }
+    // Do not open sidebar here
   };
 
   const removeFromCart = (id) => setCart(cart.filter((item) => item.id !== id));
@@ -332,29 +335,26 @@ const Shop = () => {
 
       {/* Filters and Sort */}
       <div className="flex flex-wrap justify-between mb-6 gap-4">
-        <div>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="p-2 border rounded"
-          >
-            <option value="All">All Products</option>
-            <option value="Raw Herb">Raw Herbs</option>
-            <option value="Processed">Processed Products</option>
-          </select>
-        </div>
-        <div>
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="p-2 border rounded"
-          >
-            <option value="">Sort By</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="rating-desc">Rating: High to Low</option>
-          </select>
-        </div>
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="p-2 border rounded"
+        >
+          <option value="All">All Products</option>
+          <option value="Raw Herb">Raw Herbs</option>
+          <option value="Processed">Processed Products</option>
+        </select>
+
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="p-2 border rounded"
+        >
+          <option value="">Sort By</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating-desc">Rating: High to Low</option>
+        </select>
       </div>
 
       {/* Product Grid */}
@@ -439,10 +439,10 @@ const Shop = () => {
 
       {/* Floating Cart Button */}
       <button
-        onClick={() => setExpandedProduct(null)}
-        className="fixed bottom-6 right-6 bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 z-[999]"
+        onClick={() => setIsCartOpen(!isCartOpen)}
+        className="fixed bottom-6 left-6 bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 z-[1100]"
       >
-        <ShoppingCart />
+        <ShoppingCart className="w-6 h-6" />
         {cart.length > 0 && (
           <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs rounded-full px-2">
             {cart.length}
@@ -452,43 +452,63 @@ const Shop = () => {
 
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl p-4 z-50 transform transition-transform duration-300 ${
-          cart.length > 0 ? "translate-x-0" : "translate-x-full"
-        } overflow-y-auto`}
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl p-6 z-50 transform transition-transform duration-300 ${
+          isCartOpen ? "translate-x-0" : "translate-x-full"
+        } flex flex-col`}
       >
-        <h2 className="text-xl font-bold mb-4">Shopping Cart</h2>
-        {cart.length === 0 && <p>Your cart is empty.</p>}
-        {cart.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-center gap-3 mb-4 border-b pb-2"
+        {/* Sidebar Header */}
+        <div className="flex justify-between items-center mb-4 border-b pb-2">
+          <h2 className="text-2xl font-bold">Shopping Cart</h2>
+          <button
+            className="text-gray-600 hover:text-gray-900"
+            onClick={() => setIsCartOpen(false)}
           >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-16 h-16 object-cover rounded"
-            />
-            <div className="flex-1">
-              <h3 className="font-semibold">{item.name}</h3>
-              <p>
-                Rs {item.price} x {item.quantity}
-              </p>
-            </div>
-            <button
-              className="text-red-600 hover:text-red-800"
-              onClick={() => removeFromCart(item.id)}
+            <X />
+          </button>
+        </div>
+
+        {/* Cart Items */}
+        <div className="flex-1 overflow-y-auto space-y-4">
+          {cart.length === 0 && (
+            <p className="text-gray-500">Your cart is empty.</p>
+          )}
+          {cart.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center gap-3 p-2 border rounded shadow-sm hover:shadow-md transition"
             >
-              <X />
-            </button>
-          </div>
-        ))}
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-16 h-16 object-cover rounded"
+              />
+              <div className="flex-1">
+                <h3 className="font-semibold">{item.name}</h3>
+                <p className="text-sm text-gray-700">
+                  Rs {item.price} x {item.quantity}
+                </p>
+              </div>
+              <button
+                className="text-red-600 hover:text-red-800"
+                onClick={() => removeFromCart(item.id)}
+              >
+                <X />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Total Section */}
         {cart.length > 0 && (
-          <p className="font-bold mt-4">
-            Total: Rs{" "}
-            {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}
-          </p>
+          <div className="mt-4 border-t pt-4">
+            <p className="font-bold text-lg">
+              Total: Rs{" "}
+              {cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+            </p>
+          </div>
         )}
       </div>
+      <ChatBot />
     </div>
   );
 };

@@ -10,11 +10,14 @@ const fabricService = require("./services/fabricService");
 // Import routes
 const authRoutes = require("./routes/auth");
 const fabricRoutes = require("./routes/fabric");
-
 const herbRoutes = require("./routes/herbs");
 const userRoutes = require("./routes/users");
+
 const generateSampleData = require("./scripts/generateSampleData");
 const setupWallet = require("./scripts/setupWallet");
+
+// Gemini API client
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -34,7 +37,6 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/fabric", fabricRoutes);
-
 app.use("/api/herbs", herbRoutes);
 app.use("/api/users", userRoutes);
 
@@ -46,6 +48,27 @@ app.get("/health", (req, res) => {
     environment: process.env.NODE_ENV,
     fabric: fabricService.isInitialized,
   });
+});
+
+// Gemini route
+app.post("/api/gemini/ask", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    if (!prompt) {
+      return res.status(400).json({ message: "Prompt is required" });
+    }
+
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+
+    res.json({ response: responseText });
+  } catch (error) {
+    console.error("Gemini API error:", error);
+    res.status(500).json({ message: "Failed to get response from Gemini" });
+  }
 });
 
 // Error handling middleware
@@ -62,16 +85,14 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
+// Demo setup route
 app.post("/api/demo/setup", async (req, res) => {
   try {
     if (process.env.DEMO_MODE !== "true") {
       return res.status(403).json({ message: "Demo mode not enabled" });
     }
 
-    // Setup wallet first
     await setupWallet();
-
-    // Generate sample data
     const result = await generateSampleData();
 
     res.json({
@@ -90,15 +111,12 @@ app.post("/api/demo/setup", async (req, res) => {
 // Start server
 const startServer = async () => {
   try {
-    // Test database connection
     await sequelize.authenticate();
     console.log("Database connection established");
 
-    // Sync database models
     await sequelize.sync({ alter: true });
     console.log("Database synchronized");
 
-    // Initialize Fabric service
     try {
       await fabricService.initialize();
       console.log("Fabric service initialized");
@@ -107,7 +125,6 @@ const startServer = async () => {
       console.warn("Server will continue without blockchain functionality");
     }
 
-    // Start HTTP server
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV}`);
