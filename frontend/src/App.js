@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import HerbDetails from "./pages/HerbDetails";
 import AdminPanel from "./pages/AdminPanel";
 import "./index.css";
+import MyHerbs from "./pages/MyHerbs";
 
 // Protected Route Component
 function ProtectedRoute({ children, allowedRoles = [] }) {
@@ -162,6 +163,23 @@ function AppContent() {
             element={
               <ProtectedRoute allowedRoles={["ADMIN"]}>
                 <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/my-herbs"
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "FARMER",
+                  "LAB",
+                  "PROCESSOR",
+                  "CONSUMER",
+                  "ADMIN",
+                ]}
+              >
+                <MyHerbs />
               </ProtectedRoute>
             }
           />

@@ -10,7 +10,13 @@ import {
 } from "lucide-react";
 import StatusBadge, { QualityBadge } from "./StatusBadge";
 
-const HerbCard = ({ herb, showActions = false, onViewDetails, onViewQR }) => {
+const HerbCard = ({
+  herb,
+  showActions = false,
+  onViewDetails,
+  onViewQR,
+  hideDetails = false,
+}) => {
   const {
     herbId,
     species,
@@ -112,15 +118,18 @@ const HerbCard = ({ herb, showActions = false, onViewDetails, onViewQR }) => {
             )}
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Link
-              to={`/herbs/${herbId}`}
-              className="flex items-center space-x-1 px-3 py-1 bg-mint-50 text-mint-700 rounded text-xs hover:bg-mint-100 transition-colors"
-            >
-              <Eye className="w-3 h-3" />
-              <span>View Details</span>
-            </Link>
-          </div>
+          {/* View Details button is hidden if hideDetails is true */}
+          {!hideDetails && (
+            <div className="flex items-center space-x-2">
+              <Link
+                to={`/herbs/${herbId}`}
+                className="flex items-center space-x-1 px-3 py-1 bg-mint-50 text-mint-700 rounded text-xs hover:bg-mint-100 transition-colors"
+              >
+                <Eye className="w-3 h-3" />
+                <span>View Details</span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
