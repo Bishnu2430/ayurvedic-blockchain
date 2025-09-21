@@ -22,6 +22,7 @@ import HerbDetails from "./pages/HerbDetails";
 import AdminPanel from "./pages/AdminPanel";
 import "./index.css";
 import MyHerbs from "./pages/MyHerbs";
+import Shop from "./pages/Shop";
 
 // Protected Route Component
 function ProtectedRoute({ children, allowedRoles = [] }) {
@@ -88,6 +89,7 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/trace" element={<TraceHerb />} />
           <Route path="/trace/:herbId" element={<TraceHerb />} />
+          <Route path="/shop" element={<Shop />} />
 
           {/* Auth Routes */}
           <Route

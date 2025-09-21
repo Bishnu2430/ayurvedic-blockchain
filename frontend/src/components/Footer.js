@@ -92,15 +92,6 @@ const Footer = () => {
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-mint-400 transition-all group-hover:w-full"></span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/about"
-                  className="text-sage-400 hover:text-mint-400 transition-colors relative group"
-                >
-                  About Us
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-mint-400 transition-all group-hover:w-full"></span>
-                </Link>
-              </li>
             </ul>
           </div>
 
