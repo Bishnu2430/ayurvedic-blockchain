@@ -132,8 +132,11 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-sage-900 via-sage-800 to-mint-900 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-sage-900/80 to-transparent"></div>
+      <section
+        className="relative bg-cover bg-center bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: "url('/herbs-bg.png')" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-sage-800/80 to-transparent"></div>
 
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -145,7 +148,7 @@ const Home = () => {
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Trust Every Herb with
-              <span className="block text-transparent bg-gradient-to-r from-mint-400 to-green-400 bg-clip-text">
+              <span className="block text-transparent bg-gradient-to-r from-green-500 to-mint-700 bg-clip-text">
                 Blockchain Traceability
               </span>
             </h1>
@@ -231,7 +234,17 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-sage-50 relative overflow-hidden">
+      <section
+        className="py-20 relative overflow-hidden bg-gradient-to-b from-white to-sage-50"
+        style={{
+          backgroundImage: "url('/herbal-pattern.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "auto",
+        }}
+      >
+        {/* Semi-transparent overlay to make text readable */}
+        <div className="absolute inset-0 bg-white/70 pointer-events-none"></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-4 py-2 bg-mint-100 text-mint-700 rounded-full text-sm font-medium mb-4">
