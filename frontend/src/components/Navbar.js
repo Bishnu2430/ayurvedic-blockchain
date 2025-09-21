@@ -47,7 +47,7 @@ const Navbar = () => {
     const publicLinks = [
       { path: "/", label: "Home", icon: Home },
       { path: "/trace", label: "Trace Herb", icon: Search },
-      { path: "/pricing", label: "Pricing", icon: DollarSign },
+      { path: "/shop", label: "Shop", icon: DollarSign },
       { path: "about", label: "About Us", icon: Info, isScroll: true },
     ];
 
@@ -58,7 +58,7 @@ const Navbar = () => {
     const userLinks = [
       { path: "/dashboard", label: "Dashboard", icon: BarChart3 },
       { path: "/trace", label: "Trace Herb", icon: Search },
-      { path: "/pricing", label: "Pricing", icon: DollarSign },
+      { path: "/shop", label: "Shop", icon: DollarSign },
       { path: "about", label: "About Us", icon: Info, isScroll: true },
     ];
 
@@ -96,7 +96,7 @@ const Navbar = () => {
                 <Leaf className="w-6 h-6 text-mint-600" />
               </div>
               <span className="bg-gradient-to-r from-sage-800 to-mint-600 bg-clip-text text-transparent">
-                HerbTrace
+                Soil-to-Shelf
               </span>
             </Link>
           </div>

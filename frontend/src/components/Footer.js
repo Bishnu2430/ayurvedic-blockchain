@@ -21,7 +21,7 @@ const Footer = () => {
               <div className="p-2 bg-mint-600 rounded-lg transition-transform transform hover:scale-110">
                 <Leaf className="w-6 h-6 text-white" />
               </div>
-              <span>HerbTrace</span>
+              <span>Soil-to-Shelf</span>
             </Link>
             <p className="text-sage-400 mb-6 max-w-md">
               Ensuring the authenticity and quality of medicinal herbs through

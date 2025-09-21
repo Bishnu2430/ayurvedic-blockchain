@@ -136,7 +136,7 @@ const Home = () => {
         className="relative bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{ backgroundImage: "url('/herbs-bg.png')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-sage-800/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-200/30 to-black/80 pointer-events-none"></div>
 
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -291,8 +291,18 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-gradient-to-r from-sage-50 to-mint-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section
+        className="py-20 relative overflow-hidden bg-gradient-to-r from-sage-50 to-mint-50"
+        style={{
+          backgroundImage: "url('/herbal-pattern.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "200px", // slightly larger pattern than Features Section
+        }}
+      >
+        {/* Subtle overlay to keep text readable */}
+        <div className="absolute inset-0 bg-white/70 pointer-events-none"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="inline-flex items-center px-4 py-2 bg-sage-100 text-sage-700 rounded-full text-sm font-medium mb-4">
@@ -311,7 +321,7 @@ const Home = () => {
                 {benefits.map((benefit, index) => (
                   <div
                     key={index}
-                    className="flex items-start space-x-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                    className="flex items-start space-x-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
                   >
                     <CheckCircle className="w-6 h-6 text-mint-500 flex-shrink-0 mt-0.5" />
                     <span className="text-sage-700 font-medium">{benefit}</span>
@@ -322,8 +332,9 @@ const Home = () => {
 
             <div className="relative">
               <div className="bg-gradient-to-br from-mint-100 via-white to-sage-100 p-10 rounded-3xl shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-mint-200/30 rounded-full blur-2xl"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-sage-200/30 rounded-full blur-xl"></div>
+                {/* Animated background blobs */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-mint-200/30 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-sage-200/30 rounded-full blur-xl animate-pulse delay-500"></div>
 
                 <div className="relative text-center">
                   <div className="text-5xl font-bold text-transparent bg-gradient-to-r from-mint-600 to-sage-600 bg-clip-text mb-4">
@@ -334,36 +345,24 @@ const Home = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-6">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                      <div className="text-2xl font-bold text-mint-600 mb-1">
-                        500+
+                    {[
+                      { value: "500+", label: "Active Farmers" },
+                      { value: "50+", label: "Certified Labs" },
+                      { value: "25+", label: "Processing Units" },
+                      { value: "99.9%", label: "Uptime" },
+                    ].map((stat, index) => (
+                      <div
+                        key={index}
+                        className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer"
+                      >
+                        <div className="text-2xl font-bold text-mint-600 mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-sage-600">
+                          {stat.label}
+                        </div>
                       </div>
-                      <div className="text-sm text-sage-600">
-                        Active Farmers
-                      </div>
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                      <div className="text-2xl font-bold text-mint-600 mb-1">
-                        50+
-                      </div>
-                      <div className="text-sm text-sage-600">
-                        Certified Labs
-                      </div>
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                      <div className="text-2xl font-bold text-mint-600 mb-1">
-                        25+
-                      </div>
-                      <div className="text-sm text-sage-600">
-                        Processing Units
-                      </div>
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                      <div className="text-2xl font-bold text-mint-600 mb-1">
-                        99.9%
-                      </div>
-                      <div className="text-sm text-sage-600">Uptime</div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -420,8 +419,14 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-sage-800 via-sage-900 to-mint-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-sage-900/90 to-transparent"></div>
+      <section
+        className="py-20 relative overflow-hidden bg-gradient-to-r from-sage-800 via-sage-900 to-mint-900 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/vector-bg.jpg')",
+        }}
+      >
+        {/* Transparent gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-200/30 to-black/80 pointer-events-none"></div>
 
         <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm text-mint-400 rounded-full text-sm font-medium mb-6">
