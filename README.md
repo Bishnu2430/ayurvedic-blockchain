@@ -14,7 +14,6 @@
 * [Core smart-contracts / chaincode](#core-smart-contracts--chaincode)
 * [REST API (example endpoints)](#rest-api-example-endpoints)
 * [Data model (high-level)](#data-model-high-level)
-* [Deployment notes](#deployment-notes)
 * [Security & privacy considerations](#security--privacy-considerations)
 * [Risks, mitigations & operational notes](#risks-mitigations--operational-notes)
 * [Future improvements / roadmap](#future-improvements--roadmap)
